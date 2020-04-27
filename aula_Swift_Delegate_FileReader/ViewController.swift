@@ -14,6 +14,20 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        if let fileURL = Bundle.main.url(forResource: "input", withExtension: "xml") {
+            do {
+                let text2 = try String(contentsOf: fileURL, encoding: .utf8)
+                print(text2)
+            } catch {
+                print(error)
+            }
+        } else {
+            print("Erro - Arquivo não encontrado")
+        }
+    }
 
 
 }
