@@ -1,4 +1,8 @@
-# Desafio Delegate
+# Material da teoria
+
+Acesse o material da teoria [aqui](Protocols.pdf).
+
+## Desafio Delegate
 
 Desenvolva um pacote utilizando Swift Package Manager que faz uso do padrão delegate para fornecer leitura de um arquivo XML no estilo SAX, veja  figura a seguir:
 
