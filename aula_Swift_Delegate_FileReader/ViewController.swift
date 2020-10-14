@@ -8,11 +8,14 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, SaxParserDelegate {
+    
+    let parser = SaxParser()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        parser.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -20,7 +23,7 @@ class ViewController: UIViewController {
         if let fileURL = Bundle.main.url(forResource: "input", withExtension: "xml") {
             do {
                 let text2 = try String(contentsOf: fileURL, encoding: .utf8)
-                print(text2)
+                parser.run(documento: text2)
             } catch {
                 print(error)
             }
@@ -28,7 +31,46 @@ class ViewController: UIViewController {
             print("Erro - Arquivo não encontrado")
         }
     }
-
-
+    
+    func startDocument() {
+        print("Inicio da leitura")
+    }
+    
+    func endDocumet() {
+        print("Fim da leitura")
+    }
+    
+    func endElement(element: String) {
+        print("Elemento fim \(element)")
+    }
+    
+    func characters(text: String) {
+        print("Texto \(text)")
+    }
+    
+    func startElement(element: String) {
+        print("Elemento início \(element)")
+    }
 }
 
+
+protocol SaxParserDelegate: AnyObject {
+    func startDocument()
+    func startElement(element: String)
+    func endElement(element: String)
+    func characters(text: String)
+    func endDocumet()
+}
+
+class SaxParser {
+    weak var delegate: SaxParserDelegate?
+    
+    func run(documento: String) {
+        delegate?.startDocument()
+        
+        // detectei um elemento <CD>
+        delegate?.startElement(element: "CD")
+        
+        delegate?.endDocumet()
+    }
+}
